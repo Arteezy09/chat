@@ -1,4 +1,4 @@
-var config = {
+export default {
     apiKey: "AIzaSyAY7D6OuKs9im_5-0MnGbB96Y7I6yqPlow",
     authDomain: "chat-55a5b.firebaseapp.com",
     databaseURL: "https://chat-55a5b.firebaseio.com",
@@ -7,4 +7,3 @@ var config = {
     messagingSenderId: "179275409994"
 };
 
-export default config;

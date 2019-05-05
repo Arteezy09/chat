@@ -1,113 +1,69 @@
 <template>
   <b-container class="mt-5">
-    <b-card-group deck>
-      <b-card>
-        <b-alert show variant="warning">{{ error }}</b-alert>
-        <b-form @submit.prevent ="signUp" novalidate >
-          <b-form-group
-            id="input-group-1"
-            label="Email address:"
-            label-for="input-1"
-            description="We'll never share your email with anyone else."
-          >
-            <b-form-input
-              id="input-1"
-              v-model="signUp.email"
-              type="email"
-              required
-              placeholder="Enter email"
-            ></b-form-input>
-          </b-form-group>
+    <b-row> 
+      <b-col cols="12" sm="6" md="8" class="d-none d-md-block">
+        <b-card no-body>
+          <b-img src="https://firebasestorage.googleapis.com/v0/b/chat-55a5b.appspot.com/o/ok.png?alt=media&token=ba5007e1-cfe8-4318-9c86-5ab5be3fa558" fluid alt="Responsive image"></b-img>
+        </b-card> 
+        <b-card text-variant="black" class="mt-4">
+          <b-card-text>
+            This project uses <b-link href="https://vuejs.org/" class="font-weight-bolder">Vue.js</b-link>, 
+            <b-link href="https://vuex.vuejs.org/" class="font-weight-bolder">Vuex</b-link>, 
+            <b-link href="https://router.vuejs.org/" class="font-weight-bolder">Vue Router</b-link>, 
+            <b-link href="https://firebase.google.com/" class="font-weight-bolder">Firebase</b-link>, 
+            <b-link href="https://momentjs.com/" class="font-weight-bolder">Moment.js</b-link>,
+            <b-link href="https://bootstrap-vue.js.org/" class="font-weight-bolder">BootstrapVue</b-link>
+          </b-card-text>
+          <b-button href="#" variant="dark" :disabled="getProcess">Github code</b-button>
+        </b-card>
+      </b-col>    
+      <b-col cols="12" sm="12" md="4">
+        <SignInForm></SignInForm>
+        <SignUpForm class="mt-4"></SignUpForm>
+      </b-col>
+    </b-row>
 
-          <b-form-group id="input-group-2" label="Password:" label-for="input-2">
-            <b-form-input
-              id="input-2"
-              v-model="signUp.password"
-              required
-              type="password"
-              placeholder="password"
-            ></b-form-input>
-          </b-form-group>
-          <b-button type="submit" variant="primary" :disabled="process">Log in</b-button>
-        </b-form>
-      </b-card>
-      <b-card>
-        <b-form @submit.prevent ="signIn">
-          <b-form-group
-            id="input-group-3"
-            label="Email address:"
-            label-for="input-3"
-            description="We'll never share your email with anyone else."
-          >
-            <b-form-input
-              id="input-3"
-              v-model="signIn.email"
-              type="email"
-              required
-              placeholder="Enter email"
-            ></b-form-input>
-          </b-form-group>
+    <hr>
 
-          <b-form-group id="input-group-4" label="Password:" label-for="input-4">
-            <b-form-input
-              id="input-4"
-              v-model="signIn.password"
-              required
-              type="password"
-              placeholder="password"
-            ></b-form-input>
-          </b-form-group>
+    <b-row class="text-center mt-5"> 
+      <b-col cols="12" sm="6" md="4">
+        <span style="font-size: 45px; color: Dodgerblue; " >
+          <i class="fas fa-comment-alt"></i>
+        </span>
+        <h5>Communicate in real time</h5>
+        <p class="text-justify">To start communication with other people you must register. If you forget your password, you can retrieve it by clicking on the Forgot your password?</p>
+      </b-col>
+      <b-col cols="12" sm="6" md="4">
+        <span style="font-size: 45px; color: Dodgerblue;">
+          <i class="fas fa-cogs"></i>
+        </span>
+        <h5>Change account settings</h5>
+        <p class="text-justify">You can change user settings, such as: password, mail, username and user photo. You can also delete a user. Before these actions you need to re-authenticate the user.</p>
+      </b-col>
+      <b-col cols="12" sm="6" md="4">
+        <span style="font-size: 45px; color: Dodgerblue;">
+          <i class="fas fa-tablet-alt"></i>
+        </span>
+        <h5>Communicate using any device</h5>
+        <p class="text-justify">This website is optimized to work on any device: communicate from your desktop, tablet or mobile phone.</p>
+      </b-col>
+    </b-row>
 
-
-
-          <b-button type="submit" variant="primary">Submit</b-button>
-          
-        
-        </b-form>
-      </b-card>
-    </b-card-group>
   </b-container>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        form: {
-          email: '',
-          name: '',
-          food: null,
-          checked: []
-        },
-        foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
-      }   
-    },
-    methods: {
-      signUp() {
-        this.$store.dispatch('SIGNUP', {email: this.signUp.email, password: this.signUp.password})
-      },
-      signIn() {
-        this.$store.dispatch('SIGNIN', {email: this.signIn.email, password: this.signIn.password})
-      },
+import SignInForm from '@/components/SignInForm'
+import SignUpForm from '@/components/SignUpForm'
+import { mapGetters } from 'vuex'
 
-    },
-    computed: {
-      userOnline() {
-        return this.$store.getters.userOnline
-      },
-      error() {
-        return this.$store.getters.getError
-      },
-      process() {
-        return this.$store.getters.getProcess
-      }
-    },
-    watch: {
-      userOnline(val) {
-        if(val === true) {
-          this.$router.push('/about')
-        }
-      }
-    }
-  }
+export default {
+  components: { 
+    SignInForm,
+    SignUpForm
+  },
+  computed: {
+    ...mapGetters(['getProcess'])
+  } 
+}  
 </script>
