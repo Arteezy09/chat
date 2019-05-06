@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
 import Store from './store'
+import Home from './views/Home.vue'
 import Profile from './views/Profile.vue'
-
+import Chat from './views/Chat.vue'
 
 Vue.use(Router)
 
-export default new Router({
+let router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -17,25 +17,34 @@ export default new Router({
       component: Home
     },
     {
-      path: '/about',
-      name: 'about',
- 
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
-      beforeEnter: AuthGuard
+      path: '/chat',
+      name: 'chat',
+      component: Chat,
+      meta: { authRequired: true}
     },
     {
-      path: '/profile/:id',
+      path: '/profile',
       name: 'profile',
-      component: Profile
-    },
+      component: Profile,
+      meta: { authRequired: true}
+    }
   ]
 })
 
-function AuthGuard(from, to, next) {
-  if (Store.getters.userOnline) {
-    next()
-  }
-  else {
-    next('/')
-  }
-} 
+router.beforeEach((to, from, next) => {
+  Store.dispatch('INIT_AUTH').then(user => {
+    if (to.matched.some(route => route.meta.authRequired)) {
+      if (user) {
+        next()
+      }
+      else {
+        next('/')
+      }
+    }
+    else {
+      next()
+    }
+  })
+})
+
+export default router

@@ -9,8 +9,9 @@ export default {
             uid: null,
             name: null,
             email: null,
-            photo: null
-        }
+            photo: null,
+        },
+        unsubscribeAuth: null
     },
     getters: {
         userOnline: (state) => state.user.online,
@@ -39,31 +40,51 @@ export default {
                 online: false,
                 uid: null
             }
+        },
+        SET_UNSUBSCRIBE_AUTH(state, payload) {
+            state.unsubscribeAuth = payload
         }
     },
     actions: {
+        INIT_AUTH({dispatch, commit, state}) {
+            return new Promise((resolve) => {
+                if(state.unsubscribeAuth)
+                    state.unsubscribeAuth()
+                let unsubscribe = firebase.auth().onAuthStateChanged(function(user) {
+                  dispatch('STATE_CHANGED', user)
+                  resolve(user)
+                });
+                commit('SET_UNSUBSCRIBE_AUTH', unsubscribe)
+            })
+        },
         SIGNUP({commit}, payload) {
             commit('SET_PROCESS', true)
             commit('CLEAR_ERROR1')
-            firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
-            .then(() => {
-                firebase.auth().currentUser.updateProfile({displayName: payload.name})
-                .then(() => commit('SET_USER_NAME', payload.name))
+            if (payload.name.length > 1) {
+                firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
+                .then(() => {
+                    firebase.auth().currentUser.updateProfile({displayName: payload.name})
+                    .then(() => commit('SET_USER_NAME', payload.name))
 
-                firebase.auth().currentUser.updateProfile({photoURL: 'https://firebasestorage.googleapis.com/v0/b/chat-55a5b.appspot.com/o/avatar.jpg?alt=media&token=c21bb91c-1b67-40e3-a098-f0f63c24cc2f'})
-                .then(() => commit('SET_USER_PHOTO', 'https://firebasestorage.googleapis.com/v0/b/chat-55a5b.appspot.com/o/avatar.jpg?alt=media&token=c21bb91c-1b67-40e3-a098-f0f63c24cc2f'))
+                    firebase.auth().currentUser.updateProfile({photoURL: 'https://firebasestorage.googleapis.com/v0/b/chat-55a5b.appspot.com/o/avatar.jpg?alt=media&token=c21bb91c-1b67-40e3-a098-f0f63c24cc2f'})
+                    .then(() => commit('SET_USER_PHOTO', 'https://firebasestorage.googleapis.com/v0/b/chat-55a5b.appspot.com/o/avatar.jpg?alt=media&token=c21bb91c-1b67-40e3-a098-f0f63c24cc2f'))
 
-                db.collection('users').add({
-                    name: payload.name,
-                    timestamp: Date.now()
+                    db.collection('users').add({
+                        name: payload.name,
+                        timestamp: Date.now()
+                    })
+                    commit('SET_PROCESS', false)
                 })
+                .catch(function(error) {
+                    commit('SET_PROCESS', false)
+                    commit('SET_ERROR1', error.message)
+            
+                });
+            }
+            else {
                 commit('SET_PROCESS', false)
-            })
-            .catch(function(error) {
-                commit('SET_PROCESS', false)
-                commit('SET_ERROR1', error.message)
-        
-            });
+                commit('SET_ERROR1', 'The name must be 2 characters long or more.')
+            }
         },
         SIGNIN({commit}, payload) {
             commit('SET_PROCESS', true)
@@ -103,15 +124,21 @@ export default {
             
             user.reauthenticateAndRetrieveDataWithCredential(credential).then(function() {
                 if(payload.changeType == 'name') {
-                    firebase.auth().currentUser.updateProfile({displayName: payload.newName})
-                    .then(() => {
-                        commit('SET_USER_NAME', payload.newName)
+                    if (payload.newName.length > 1) {
+                        firebase.auth().currentUser.updateProfile({displayName: payload.newName})
+                        .then(() => {
+                            commit('SET_USER_NAME', payload.newName)
+                            commit('SET_PROCESS', false)
+                        })
+                        .catch(error => {
+                            commit('SET_PROCESS', false)
+                            commit('SET_ERROR', error.message)
+                        })
+                    }
+                    else {
                         commit('SET_PROCESS', false)
-                    })
-                    .catch(error => {
-                        commit('SET_PROCESS', false)
-                        commit('SET_ERROR', error.message)
-                    })
+                        commit('SET_ERROR', 'The name must be 2 characters long or more.')
+                    }
                 }
                 if(payload.changeType == 'email') {
                     firebase.auth().currentUser.updateEmail(payload.newEmail)
@@ -132,25 +159,30 @@ export default {
                     .catch(error => {
                         commit('SET_PROCESS', false)
                         commit('SET_ERROR', error.message)
-                    })
+                    })    
                 }
                 if(payload.changeType == 'photo') {
-                    firebase.auth().currentUser.updateProfile({photoURL: payload.newPhoto})
-                    .then(() => {
-                        commit('SET_USER_PHOTO', payload.newPhoto)
+                    if (payload.newPhoto.length > 5) {
+                        firebase.auth().currentUser.updateProfile({photoURL: payload.newPhoto})
+                        .then(() => {
+                            commit('SET_USER_PHOTO', payload.newPhoto)
+                            commit('SET_PROCESS', false)
+                        })
+                        .catch(error => {
+                            commit('SET_PROCESS', false)
+                            commit('SET_ERROR', error.message)
+                        })
+                    }
+                    else {
                         commit('SET_PROCESS', false)
-                    })
-                    .catch(error => {
-                        commit('SET_PROCESS', false)
-                        commit('SET_ERROR', error.message)
-                    })
+                        commit('SET_ERROR', 'wrong url')
+                    }
                 }
             }).catch(function(error) {
                 commit('SET_PROCESS', false)
                 commit('SET_ERROR', error.message)
             });
         },
-
         RESET_PASSWORD({commit}, payload) {    
             commit('SET_PROCESS', true)
             commit('CLEAR_ERROR')
@@ -163,7 +195,6 @@ export default {
                 commit('SET_ERROR', error.message)
             });
         },
-
         DELETE({commit}, payload) {
             let user = firebase.auth().currentUser
             let credential = firebase.auth.EmailAuthProvider.credential(
@@ -172,7 +203,8 @@ export default {
             )
             commit('SET_PROCESS', true)
             commit('CLEAR_ERROR1') 
-            user.reauthenticateAndRetrieveDataWithCredential(credential).then(function() {
+            user.reauthenticateAndRetrieveDataWithCredential(credential)
+            .then(function() {
                 firebase.auth().currentUser.delete()
                 .then(() => {
                     commit('SET_PROCESS', false)
@@ -186,6 +218,5 @@ export default {
                 commit('SET_ERROR1', error.message)
             });       
         }
-
     }
 }

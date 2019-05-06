@@ -43,7 +43,7 @@
 
         <b-card title="You can change the settings here" class="mt-4">
           <b-alert :show="getError" variant="warning">{{ getError }}</b-alert>
-          <b-form @submit.prevent="changeUserData" class="mt-4">
+          <b-form @submit.prevent="changeUserData" class="mt-4" novalidate>
             <b-form-group
               id="group-email"
               label="Enter current email"
@@ -55,9 +55,6 @@
                 type="email"
                 name="email"
                 placeholder="email"
-                oninvalid="alert('The email address is badly formatted!');" 
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                required
               ></b-form-input>
             </b-form-group>
             <b-form-group
@@ -70,10 +67,7 @@
                 v-model="password" 
                 type="password"
                 name="password"
-                placeholder="password"  
-                oninvalid="alert('Password should be at least 6 characters!');" 
-                pattern=".{6,}"
-                required                   
+                placeholder="password"                   
               ></b-form-input>
             </b-form-group>
             <b-form-radio-group id="radio" v-model="changeType" name="radio">
@@ -87,9 +81,6 @@
                 type="text"
                 placeholder="New name" 
                 class="mt-3"
-                oninvalid="alert('New name should be at least 2 characters!');" 
-                pattern=".{2,}"
-                required
               ></b-form-input>
               <b-form-input 
                 v-if="changeType=='email'" 
@@ -97,9 +88,6 @@
                 type="email"
                 placeholder="New email" 
                 class="mt-3"
-                oninvalid="alert('The new email address is badly formatted!');" 
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                required
               ></b-form-input>
               <b-form-input 
                 v-if="changeType=='password'" 
@@ -107,19 +95,13 @@
                 type="password"
                 placeholder="New password" 
                 class="mt-3"
-                oninvalid="alert('New password should be at least 6 characters!');" 
-                pattern=".{6,}"
-                required  
               ></b-form-input>
               <b-form-input 
                 v-if="changeType=='photo'" 
                 v-model="newPhoto" 
                 type="url"
-                placeholder="New photo (url)" 
+                placeholder="New photo (correct url)!" 
                 class="mt-3"
-                oninvalid="alert('The new photo address is badly formatted!');" 
-                pattern="https?://.+"
-                required
               ></b-form-input>
             </b-form-radio-group>
             <b-button type="submit" variant="primary" class="mt-3" :disabled="getProcess">Update</b-button>

@@ -48,7 +48,7 @@
         <p class="text-justify">This website is optimized to work on any device: communicate from your desktop, tablet or mobile phone.</p>
       </b-col>
     </b-row>
-
+    
   </b-container>
 </template>
 
@@ -64,6 +64,8 @@ export default {
   },
   computed: {
     ...mapGetters(['getProcess'])
-  } 
+  }
 }  
 </script>
+
+

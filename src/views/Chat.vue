@@ -3,11 +3,11 @@
         <b-row class="mt-5">
             <b-col cols="12" sm="7" offset-sm="2">
                 <b-card no-body>
-                    <ul style="max-height: 550px; overflow: auto;" v-chat-scroll>
+                    <ul style="max-height: 400px; overflow: auto;" v-chat-scroll>
                         <li v-for="message in messages" :key="message.id" class="my-2">
                             <b-img :src="message.avatar" v-bind="mainProps" rounded="circle" alt="Circle image"></b-img>
                             <span class="ml-2 text-dark font-weight-bolder" style="font-size: 20px">{{ message.name }}</span>
-                            <span class="ml-2 text-muted text-lowercase" style="font-size: 13px">{{ message.timestamp }}</span>
+                            <span class="ml-2 text-muted text-lowercase" style="font-size: 12px">{{ message.timestamp }}</span>
                             <p style="font-size: 15px">{{ message.content }}</p>
                         </li>
                     </ul>
@@ -27,9 +27,8 @@
                     </b-input-group>
                 </b-form>
             </b-col> 
-
             <b-col cols="12" sm="3" class="d-none d-sm-block">
-                <b-card no-body style="position:relative; height:622px; overflow-y:scroll;">
+                <b-card no-body style="position:relative; height:472px; overflow-y:scroll;">
                     <div v-for="user in users" :key="user.id">
                         <b-card
                             header="Welcome!"

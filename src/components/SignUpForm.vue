@@ -2,7 +2,7 @@
   <div>
     <b-card class="text-center" title="First time on WebChat?" sub-title="Sign up for WebChat">
       <b-alert :show="getError1" variant="warning" class="text-left">{{ getError1 }}</b-alert>
-      <b-form @submit.prevent="signUp" class="text-left mt-4">
+      <b-form @submit.prevent="signUp" class="text-left mt-4" novalidate>
 
         <b-form-group
           id="signup-group-name"
@@ -13,10 +13,7 @@
             v-model = "Name" 
             type = "text"
             name = "signupName"
-            placeholder="Your name"
-            oninvalid="alert('Name should be at least 2 characters!');" 
-            pattern=".{2,}"
-            required
+            placeholder="Your name"  
           >
           </b-form-input>
         </b-form-group>
@@ -29,10 +26,7 @@
             v-model = "signupEmail" 
             type = "email"
             name = "signupEmail"
-            placeholder="Enter email"
-            oninvalid="alert('The email address is badly formatted!');" 
-            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-            required
+            placeholder="Enter email" 
           ></b-form-input>
         </b-form-group>
 
@@ -44,10 +38,7 @@
             v-model = "signupPassword" 
             type = "password"
             name = "signupPassword"
-            placeholder="Enter password"  
-            oninvalid="alert('Password should be at least 6 characters!');" 
-            pattern=".{6,}"
-            required                   
+            placeholder="Enter password"                   
           ></b-form-input>
         </b-form-group>
 
@@ -81,7 +72,7 @@ export default {
   watch: {
     userOnline(val) {
       if(val === true) {
-        this.$router.push('/about')
+        this.$router.push('/chat')
       }
     }
   }

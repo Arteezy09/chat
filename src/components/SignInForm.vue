@@ -29,23 +29,27 @@
         </b-form-group>
 
         <b-button type="submit" variant="primary" :disabled="getProcess">Log in</b-button>
-        <b-link class="ml-4 text-muted" v-b-modal.modal-prevent-closing style="font-size: 15px">Forgot your password?</b-link>
+        <b-link class="ml-4 text-muted" @click="modalShow = !modalShow" style="font-size: 15px">Forgot your password?</b-link>
 
         <b-modal
-          id="modal-prevent-closing"
-          ref="modal"
           title="Enter your email"
-          @show="resetModal"
-          @hidden="resetModal"
-          @ok="handleOk"
+          hide-footer
+          v-model="modalShow"
         >
-          <b-alert :show="getError" variant="warning">{{ getError }}</b-alert>
-          <form>
-            <b-form-input
-              id="email-input"
-              v-model="email"
-              placeholder="Email"
-            ></b-form-input>
+          <form @submit.prevent="submit" novalidate>
+            <b-alert :show="getError" variant="warning">{{ getError }}</b-alert>
+            <b-form-group
+              label="Email"
+              label-for="email-input"
+            >
+              <b-form-input
+                id="email-input"
+                v-model="email"
+                type="text"
+                name="email-input"
+              ></b-form-input>
+            </b-form-group>
+            <b-button type="submit" variant="dark" :disabled="getProcess">Send</b-button>
           </form>
         </b-modal>
 
@@ -63,6 +67,7 @@ export default {
     return {
       signinEmail: '',
       signinPassword: '',  
+      modalShow: false,
       email: ''
     }   
   },
@@ -70,24 +75,13 @@ export default {
     signIn() {
       this.$store.dispatch('SIGNIN', {email: this.signinEmail, password: this.signinPassword})
     },
-
-    resetModal() {
-      this.email = ''
-      this.clear()
-    },
-    handleOk(bvModalEvt) {
-      bvModalEvt.preventDefault()
-      this.$store.dispatch('RESET_PASSWORD', {email: this.email})
-      this.handleSubmit()
-      
-    },
-    handleSubmit() {
-      if (!this.getError) {
-        return
-      }
-      this.$nextTick(() => {
-        this.$refs.modal.hide()
-      })
+    submit() {
+      this.$store.dispatch('RESET_PASSWORD', {email: this.email}).then(() => {
+          if (!this.getError) {
+            this.modalShow = false
+          }
+        }
+      )
     },
 
     ...mapMutations({ clear: 'CLEAR_ERROR' })
@@ -95,11 +89,13 @@ export default {
   },
   computed: {
     ...mapGetters(['userOnline', 'getError', 'getError2', 'getProcess'])
+
+
   },
   watch: {
     userOnline(val) {
       if(val === true) {
-        this.$router.push('/about')
+        this.$router.push('/chat')
       }
     }
   }
