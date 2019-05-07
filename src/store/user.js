@@ -120,7 +120,7 @@ export default {
             )
 
             commit('SET_PROCESS', true)
-            commit('CLEAR_ERROR')
+            commit('CLEAR_ERROR3')
             
             user.reauthenticateAndRetrieveDataWithCredential(credential).then(function() {
                 if(payload.changeType == 'name') {
@@ -132,12 +132,12 @@ export default {
                         })
                         .catch(error => {
                             commit('SET_PROCESS', false)
-                            commit('SET_ERROR', error.message)
+                            commit('SET_ERROR3', error.message)
                         })
                     }
                     else {
                         commit('SET_PROCESS', false)
-                        commit('SET_ERROR', 'The name must be 2 characters long or more.')
+                        commit('SET_ERROR3', 'The name must be 2 characters long or more.')
                     }
                 }
                 if(payload.changeType == 'email') {
@@ -148,7 +148,7 @@ export default {
                     })
                     .catch(error => {
                         commit('SET_PROCESS', false)
-                        commit('SET_ERROR', error.message)
+                        commit('SET_ERROR3', error.message)
                     })
                 }
                 if(payload.changeType == 'password') {
@@ -158,7 +158,7 @@ export default {
                     })
                     .catch(error => {
                         commit('SET_PROCESS', false)
-                        commit('SET_ERROR', error.message)
+                        commit('SET_ERROR3', error.message)
                     })    
                 }
                 if(payload.changeType == 'photo') {
@@ -170,17 +170,17 @@ export default {
                         })
                         .catch(error => {
                             commit('SET_PROCESS', false)
-                            commit('SET_ERROR', error.message)
+                            commit('SET_ERROR3', error.message)
                         })
                     }
                     else {
                         commit('SET_PROCESS', false)
-                        commit('SET_ERROR', 'wrong url')
+                        commit('SET_ERROR3', 'wrong url')
                     }
                 }
             }).catch(function(error) {
                 commit('SET_PROCESS', false)
-                commit('SET_ERROR', error.message)
+                commit('SET_ERROR3', error.message)
             });
         },
         RESET_PASSWORD({commit}, payload) {    
@@ -202,7 +202,7 @@ export default {
                 payload.password
             )
             commit('SET_PROCESS', true)
-            commit('CLEAR_ERROR1') 
+            commit('CLEAR_ERROR4') 
             user.reauthenticateAndRetrieveDataWithCredential(credential)
             .then(function() {
                 firebase.auth().currentUser.delete()
@@ -211,11 +211,11 @@ export default {
                 })
                 .catch(error => {
                     commit('SET_PROCESS', false)
-                    commit('SET_ERROR1', error.message)
+                    commit('SET_ERROR4', error.message)
                 })
             }).catch(function(error) {
                 commit('SET_PROCESS', false)
-                commit('SET_ERROR1', error.message)
+                commit('SET_ERROR4', error.message)
             });       
         }
     }

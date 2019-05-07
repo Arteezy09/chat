@@ -3,7 +3,6 @@
     <b-card class="text-center" title="First time on WebChat?" sub-title="Sign up for WebChat">
       <b-alert :show="getError1" variant="warning" class="text-left">{{ getError1 }}</b-alert>
       <b-form @submit.prevent="signUp" class="text-left mt-4" novalidate>
-
         <b-form-group
           id="signup-group-name"
           description="Let us know your name"    
@@ -17,7 +16,6 @@
           >
           </b-form-input>
         </b-form-group>
-
         <b-form-group
           id="signup-group-email"
         >
@@ -29,7 +27,6 @@
             placeholder="Enter email" 
           ></b-form-input>
         </b-form-group>
-
         <b-form-group
           id="signup-group-password"
         >
@@ -41,9 +38,7 @@
             placeholder="Enter password"                   
           ></b-form-input>
         </b-form-group>
-
         <b-button type="submit" variant="primary" :disabled="getProcess">Register</b-button>
-
       </b-form>
     </b-card>
   </div>

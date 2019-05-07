@@ -3,7 +3,6 @@
     <b-card>
       <b-alert :show="getError2" variant="warning">{{ getError2 }}</b-alert>
       <b-form @submit.prevent="signIn" novalidate>
-
         <b-form-group
           id="signin-group-email"
         >
@@ -27,14 +26,13 @@
             placeholder="Password"                    
           ></b-form-input>
         </b-form-group>
-
         <b-button type="submit" variant="primary" :disabled="getProcess">Log in</b-button>
-        <b-link class="ml-4 text-muted" @click="modalShow = !modalShow" style="font-size: 15px">Forgot your password?</b-link>
-
+        <b-link class="ml-4 text-muted" @click="modalShow = !modalShow" style="font-size: 13px">Forgot your password?</b-link>
         <b-modal
           title="Enter your email"
           hide-footer
           v-model="modalShow"
+          @hidden="resetModal"
         >
           <form @submit.prevent="submit" novalidate>
             <b-alert :show="getError" variant="warning">{{ getError }}</b-alert>
@@ -52,7 +50,6 @@
             <b-button type="submit" variant="dark" :disabled="getProcess">Send</b-button>
           </form>
         </b-modal>
-
       </b-form>
     </b-card>
   </div>
@@ -82,6 +79,10 @@ export default {
           }
         }
       )
+    },
+    resetModal() {
+      this.email = ''
+      this.clear()
     },
 
     ...mapMutations({ clear: 'CLEAR_ERROR' })

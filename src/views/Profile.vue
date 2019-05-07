@@ -6,6 +6,7 @@
           :img-src="userPhoto"
           img-alt="Image"
           img-top
+          img-height="400px"
           title="Your profile" 
           class="mt-5"
         >
@@ -42,7 +43,7 @@
         </b-card>
 
         <b-card title="You can change the settings here" class="mt-4">
-          <b-alert :show="getError" variant="warning">{{ getError }}</b-alert>
+          <b-alert :show="getError3" variant="warning">{{ getError3 }}</b-alert>
           <b-form @submit.prevent="changeUserData" class="mt-4" novalidate>
             <b-form-group
               id="group-email"
@@ -109,7 +110,7 @@
         </b-card>
 
         <b-card title="You can delete your account here" class="mt-4">
-          <b-alert :show="getError1" variant="warning">{{ getError1 }}</b-alert>
+          <b-alert :show="getError4" variant="warning">{{ getError4 }}</b-alert>
           <b-form @submit.prevent="deleteUser" class="mt-4" novalidate>
             <b-form-group
               id="group-email-delete"
@@ -187,7 +188,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['userName', 'userEmail', 'getError', 'getError1', 'getProcess', 'userPhoto'])
+    ...mapGetters(['userName', 'userEmail', 'getError3', 'getError4', 'getProcess', 'userPhoto'])
   }
 }
 </script>

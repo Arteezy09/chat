@@ -3,7 +3,7 @@
     <b-row> 
       <b-col cols="12" sm="6" md="8" class="d-none d-md-block">
         <b-card no-body>
-          <b-img src="https://firebasestorage.googleapis.com/v0/b/chat-55a5b.appspot.com/o/ok.png?alt=media&token=ba5007e1-cfe8-4318-9c86-5ab5be3fa558" fluid alt="Responsive image"></b-img>
+          <b-img src="https://firebasestorage.googleapis.com/v0/b/chat-55a5b.appspot.com/o/tt.png?alt=media&token=95f3c3a5-214d-46d3-bc39-4386e2d88b75" fluid alt="Responsive image"></b-img>
         </b-card> 
         <b-card text-variant="black" class="mt-4">
           <b-card-text>

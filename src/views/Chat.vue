@@ -1,4 +1,4 @@
-<template>
+<template> 
     <b-container>
         <b-row class="mt-5">
             <b-col cols="12" sm="7" offset-sm="2">
@@ -28,23 +28,25 @@
                 </b-form>
             </b-col> 
             <b-col cols="12" sm="3" class="d-none d-sm-block">
-                <b-card no-body style="position:relative; height:472px; overflow-y:scroll;">
-                    <div v-for="user in users" :key="user.id">
-                        <b-card
-                            header="Welcome!"
-                            header-text-variant="white"
-                            header-tag="header"
-                            header-bg-variant="dark"
-                            class="mt-5"
-                        >
-                            <b-card-text>New user <span class="text-primary font-weight-bolder">{{ user.name }}</span> joined the WebChat.</b-card-text>
-                            <div slot="footer"><small class="text-muted">{{ user.timestamp }}</small></div>
-                        </b-card>  
-                    </div>        
+                <b-card no-body>
+                    <b-list-group>
+                        <ul style="max-height: 454px; overflow: auto; margin-left: 0; padding-left: 0;" v-chat-scroll>
+                            <li v-for="user in users" :key="user.id" style="list-style-type: none;">
+                                <b-list-group-item href="#" class="flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">Welcome!</h5>
+                                    <small class="text-muted">@chat</small>
+                                    </div>
+                                    <p class="mb-1">{{ user.name }}</p>
+                                    <small class="text-muted">{{ user.timestamp }}</small>
+                                </b-list-group-item>
+                            </li>
+                        </ul>   
+                    </b-list-group>   
                 </b-card>   
             </b-col> 
         </b-row>
-    </b-container>
+    </b-container> 
 </template>
 
 <script>
