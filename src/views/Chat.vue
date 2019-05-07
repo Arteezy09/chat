@@ -1,9 +1,9 @@
 <template> 
     <b-container>
-        <b-row class="mt-5">
-            <b-col cols="12" sm="7" offset-sm="2">
+        <b-row class="mt-2">
+            <b-col cols="12" sm="5" offset-sm="2">
                 <b-card no-body>
-                    <ul style="max-height: 400px; overflow: auto;" v-chat-scroll>
+                    <ul style="max-height: 80vh; overflow: auto;" v-chat-scroll>
                         <li v-for="message in messages" :key="message.id" class="my-2">
                             <b-img :src="message.avatar" v-bind="mainProps" rounded="circle" alt="Circle image"></b-img>
                             <span class="ml-2 text-dark font-weight-bolder" style="font-size: 20px">{{ message.name }}</span>
@@ -30,7 +30,7 @@
             <b-col cols="12" sm="3" class="d-none d-sm-block">
                 <b-card no-body>
                     <b-list-group>
-                        <ul style="max-height: 454px; overflow: auto; margin-left: 0; padding-left: 0;" v-chat-scroll>
+                        <ul style="max-height: 80vh; overflow: auto; margin-left: 0; padding-left: 0;" v-chat-scroll>
                             <li v-for="user in users" :key="user.id" style="list-style-type: none;">
                                 <b-list-group-item href="#" class="flex-column align-items-start">
                                     <div class="d-flex w-100 justify-content-between">
