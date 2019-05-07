@@ -105,11 +105,9 @@ export default {
         }
     },
     computed: {
-
         ...mapGetters(['userName', 'userEmail', 'userPhoto'])
     },
     created() {   
-
         this.chat()
         this.users_reg()
     }

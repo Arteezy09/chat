@@ -78,7 +78,6 @@ export default {
                 .catch(function(error) {
                     commit('SET_PROCESS', false)
                     commit('SET_ERROR1', error.message)
-            
                 });
             }
             else {
@@ -95,8 +94,7 @@ export default {
             })
             .catch(function(error) {
                 commit('SET_PROCESS', false)
-                commit('SET_ERROR2', error.message)
-        
+                commit('SET_ERROR2', error.message)  
             });
         },
         SIGNOUT() {
@@ -118,10 +116,8 @@ export default {
                 payload.email,
                 payload.password
             )
-
             commit('SET_PROCESS', true)
-            commit('CLEAR_ERROR3')
-            
+            commit('CLEAR_ERROR3') 
             user.reauthenticateAndRetrieveDataWithCredential(credential).then(function() {
                 if(payload.changeType == 'name') {
                     if (payload.newName.length > 1) {

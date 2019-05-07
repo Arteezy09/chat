@@ -21,10 +21,7 @@
         <SignInForm></SignInForm>
         <SignUpForm class="mt-4"></SignUpForm>
       </b-col>
-    </b-row>
-
-    <hr>
-
+    </b-row><hr>
     <b-row class="text-center mt-5"> 
       <b-col cols="12" sm="6" md="4">
         <span style="font-size: 45px; color: Dodgerblue; " >
@@ -47,8 +44,7 @@
         <h5>Communicate using any device</h5>
         <p class="text-justify">This website is optimized to work on any device: communicate from your desktop, tablet or mobile phone.</p>
       </b-col>
-    </b-row>
-    
+    </b-row>  
   </b-container>
 </template>
 

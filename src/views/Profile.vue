@@ -41,7 +41,6 @@
             </b-form-group>
           </b-form>
         </b-card>
-
         <b-card title="You can change the settings here" class="mt-4">
           <b-alert :show="getError3" variant="warning">{{ getError3 }}</b-alert>
           <b-form @submit.prevent="changeUserData" class="mt-4" novalidate>
@@ -108,7 +107,6 @@
             <b-button type="submit" variant="primary" class="mt-3" :disabled="getProcess">Update</b-button>
           </b-form>
         </b-card>
-
         <b-card title="You can delete your account here" class="mt-4">
           <b-alert :show="getError4" variant="warning">{{ getError4 }}</b-alert>
           <b-form @submit.prevent="deleteUser" class="mt-4" novalidate>
@@ -141,7 +139,6 @@
             <b-button type="submit" variant="danger" class="mt-3" :disabled="getProcess">Delete</b-button>
           </b-form>
         </b-card>
-
       </b-col>
     </b-row>
   </b-container>
