@@ -7,11 +7,12 @@
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
     <b-collapse id="nav-collapse" is-nav> 
       <b-navbar-nav class="ml-auto">
-        <b-nav-item href='#' @click.prevent="chat" v-bind:class="{ invisible: !userOnline }">Chat</b-nav-item>
+        <b-nav-item href='#' @click="chat" v-bind:class="{ invisible: !userOnline }">Chat</b-nav-item>
+        <b-nav-item href='#' @click="users" v-bind:class="{ invisible: !userOnline }">Users</b-nav-item>
         <b-nav-item-dropdown right v-bind:class="{ invisible: !userOnline }" class="mr-2">
           <template slot="button-content">User</template>
-          <b-dropdown-item @click.prevent="toProfile">Profile</b-dropdown-item>
-          <b-dropdown-item @click.prevent="signout">Sign Out</b-dropdown-item>
+          <b-dropdown-item @click="toProfile" class="text-b">Profile</b-dropdown-item>
+          <b-dropdown-item @click="signout">Sign Out</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
@@ -39,6 +40,9 @@ export default {
     },
     chat() {
       this.$router.push('/chat')
+    },
+    users() {
+      this.$router.push('/users')
     }
   },
   watch: {

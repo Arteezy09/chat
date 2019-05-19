@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="bg-light">
+  <div id="app">
     <Navbar/>
     <router-view />
   </div>
@@ -11,12 +11,7 @@ export default {
   components: { 
     Navbar
   },
-  name: 'App',
-  data () {
-    return {
-
-    }
-  }
+  name: 'App'
 }
 </script>
 
