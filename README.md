@@ -1,4 +1,4 @@
-### demo: https://probnik-1c5a3.firebaseapp.com/
+### demo: https://chat-55a5b.firebaseapp.com/
 
 # chat
 
