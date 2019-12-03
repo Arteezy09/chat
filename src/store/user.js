@@ -112,10 +112,7 @@ export default {
         },
         CHANGE_USER_PROFILE_DATA({commit}, payload) {
             let user = firebase.auth().currentUser
-            let credential = firebase.auth.EmailAuthProvider.credential(
-                payload.email,
-                payload.password
-            )
+            let credential = firebase.auth.EmailAuthProvider.credential(payload.email, payload.password)
             commit('SET_PROCESS', true)
             commit('CLEAR_ERROR3') 
             user.reauthenticateAndRetrieveDataWithCredential(credential).then(function() {
