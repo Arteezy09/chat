@@ -1,6 +1,3 @@
-### demo: https://chat-55a5b.firebaseapp.com/
-
-# chat
 
 ## Project setup
 ```
